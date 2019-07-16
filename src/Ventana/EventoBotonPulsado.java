@@ -14,33 +14,36 @@ public class EventoBotonPulsado implements ActionListener {
     {
         vent = v;
     }
+
+    @Override
     public void actionPerformed(ActionEvent e)
     {
         if(!Valida.validarVacio(this.vent.txtNombre()) &&
                 !Valida.validarVacio(this.vent.txtId()) &&
                 !Valida.validarVacio(this.vent.txtClave()) &&
                 !Valida.validarVacio(this.vent.txtTelefono()) &&
-                !Valida.validarVacio(this.vent.txtGenero()) &&
+                (!Valida.validarVacio(this.vent.txtGenF()) ||
+                !Valida.validarVacio(this.vent.txtGenM())) &&
                 !Valida.validarVacio(this.vent.txtCasado())
         )
         {
             if(Valida.validarNombre(this.vent.txtNombre()) &&
                     Valida.validarTelefono(this.vent.txtTelefono()) &&
                     Valida.validarId(this.vent.txtId()) &&
-                    Valida.validarGenero(this.vent.txtGenero()) &&
+                    (Valida.validarRadioGenero(this.vent.txtGenF()) || Valida.validarRadioGenero(this.vent.txtGenM())) &&
                     Valida.validarCasado(this.vent.txtCasado()) &&
                     Valida.validarClave(this.vent.txtClave()))
             {
                 JOptionPane.showMessageDialog(null, "Datos Guardados", "Guardar", JOptionPane.INFORMATION_MESSAGE);
                 Fichero.escribirArchObjeto(String.format("%s,%s,%s,%s,%s,%s",vent.txtId.getText(),vent.txtClave.getText(),vent.txtNombre.getText(),
-                vent.txtTel.getText(),vent.txtGen.getText(),vent.txtCasado.getText()));
+                vent.txtTel.getText(),(Valida.validarVacio(this.vent.txtGenM.getActionCommand()))? 'f': 'm',vent.txtCasado.getText()));
 
                 vent.txtId.setText(null);
                 vent.txtClave.setText(null);
                 vent.txtCasado.setText(null);
                 vent.txtNombre.setText(null);
                 vent.txtTel.setText(null);
-                vent.txtGen.setText(null);
+                vent.groupGen.clearSelection();
             }
             else
                 JOptionPane.showMessageDialog(null,"Datos NO Guardados","Guardar", JOptionPane.ERROR_MESSAGE);

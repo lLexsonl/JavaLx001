@@ -19,8 +19,13 @@ public class Ventana extends JFrame {
     protected JTextField txtNombre;
     protected JLabel lblTel;
     protected JTextField txtTel;
+
+    // Panel Para genero
+    protected ButtonGroup groupGen;
+    protected JPanel pnlGen;
     protected JLabel lblGen;
-    protected JTextField txtGen;
+    protected JRadioButton txtGenF;
+    protected JRadioButton txtGenM;
     protected JLabel lblCasado;
     protected JTextField txtCasado;
     private JPanel panelDatos;
@@ -77,9 +82,33 @@ public class Ventana extends JFrame {
         lblTel = new JLabel("Telefono: ");
         txtTel = new JTextField(10);
         txtTel.addKeyListener(new EventoKeyTyped(this.txtTel, 10));
+
+        //Iniciallizar Genero
         lblGen = new JLabel("Genero: ");
-        txtGen = new JTextField(10);
-        txtGen.addKeyListener(new KeyTypedGenero(this.txtGen,1));
+        txtGenF = new JRadioButton("Femenino");
+        txtGenM = new JRadioButton("Masculino");
+        /*
+        txtGenF.setMnemonic(KeyEvent.VK_C);*/
+        txtGenM.setActionCommand("");
+        txtGenF.setActionCommand("");
+        txtGenF.addActionListener(new EventoRadioBtnGen(this.txtGenF, this.txtGenM));
+        txtGenM.addActionListener(new EventoRadioBtnGen(this.txtGenM, this.txtGenF));
+        /*
+        txtGenM.setMnemonic(KeyEvent.VK_C);*/
+
+
+        //Group the radio buttons
+        groupGen = new ButtonGroup();
+        groupGen.add(txtGenF);
+        groupGen.add(txtGenM);
+        //JPanel para genero
+        pnlGen = new JPanel(new GridLayout(1, 0));
+        pnlGen.add(txtGenF, BorderLayout.EAST);
+        pnlGen.add(txtGenM, BorderLayout.WEST);
+        //Register a listener for the radio buttons
+        //txtGenF.addActionListener();
+        //txtGenM.addActionListener();
+
         lblCasado = new JLabel("Casado: ");
         txtCasado = new JTextField(10);
         txtCasado.addKeyListener(new KeyTypedCasado(this.txtCasado,2));
@@ -93,7 +122,7 @@ public class Ventana extends JFrame {
         panelDatos.add(lblTel);
         panelDatos.add(txtTel);
         panelDatos.add(lblGen);
-        panelDatos.add(txtGen);
+        panelDatos.add(pnlGen);
         panelDatos.add(lblCasado);
         panelDatos.add(txtCasado);
     }
@@ -129,12 +158,10 @@ public class Ventana extends JFrame {
     {
         return txtTel.getText();
     }
-    public String txtGenero()
-    {
-        return txtGen.getText();
-    }
     public String txtCasado()
     {
         return txtCasado.getText();
     }
+    public String txtGenF(){return txtGenF.getActionCommand();}
+    public String txtGenM(){return txtGenM.getActionCommand();}
 }

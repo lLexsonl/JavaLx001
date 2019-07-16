@@ -24,6 +24,8 @@ public class Valida {
 
     public static boolean validarGenero(String str) { return str.matches("^[f]|^[m]"); }
 
+    public static boolean validarRadioGenero(String str){ return str.matches("^Femenino|Masculino$");}
+
     public static boolean validarClave(String str) { return str.matches("^[1-9][0-9]{2}[a-z]$"); }
 
     public static boolean validarCasado(String str) { return str.matches("^si|no$"); }
